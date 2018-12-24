@@ -19,9 +19,9 @@ namespace ECS {
             return true;
         }
 
-        public abstract void Load(Entity entity);
-        public abstract void Update(Entity entity, float dt);
-        public abstract void Draw(Entity entity);
+        public virtual void Load(Entity entity) { }
+        public virtual void Update(Entity entity, float dt) { }
+        public virtual void Draw(Entity entity) { }
 
         public override string ToString() {
             return string.Format("System<{0}:{1}>", Name, UID);
