@@ -31,12 +31,12 @@ namespace ECS {
                 AddComponent(component);
         }
 
-        public Component FindComponent(string name){
+        public Component GetComponent(string name){
             return _Components.Find(x => x.Name == name);
         }
 
-        public T FindComponent<T>(string name) where T : Component {
-            return (T)_Components.Find(x => x.Name == name);
+        public T GetComponent<T>() where T : Component {
+            return (T)_Components.Find(x => x.Name == typeof(T).Name);
         }
 
         public bool HasComponent(string name) {
