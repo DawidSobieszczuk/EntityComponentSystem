@@ -1,18 +1,21 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ECS {
     public class Entity : ECSObject {
-        private readonly List<Component> _Components;
+        private readonly List<Component> Components = new List<Component>();
+        
         internal World World;
 
         public Entity Parent;
         public Entity[] Children { get { if(World == null) return new Entity[0]; return World.Entities.FindAll(x => x.Parent == this).ToArray(); } }
 
-        public Entity() : base() {
-            _Components = new List<Component>();
+        public Entity(){ }
+        public Entity(string name) {
+            Name = name;
         }
-
+        
         public void AddChild(Entity child) {
             if(child == this)
                 return;
@@ -20,10 +23,10 @@ namespace ECS {
         }
 
         public void AddComponent(Component component) {
-            if(Helper.CheckExistName(_Components, component, this))
+            if(Helper.CheckExistName(Components, component, this))
                 return;
 
-            _Components.Add(component);
+            Components.Add(component);
         }
 
         public void AddComponents(params Component[] components) {
@@ -32,19 +35,25 @@ namespace ECS {
         }
 
         public Component GetComponent(string name){
-            return _Components.Find(x => x.Name == name);
+            try {
+                return Components.Find(x => x.Name == name);
+            } catch(ArgumentNullException e) {
+                Debug.WriteLine("Component not exist: " + e);
+            }
+
+            return null;
         }
 
         public T GetComponent<T>() where T : Component {
-            return (T)_Components.Find(x => x.Name == typeof(T).Name);
+            return (T)GetComponent(typeof(T).Name);
         }
 
         public bool HasComponent(string name) {
-            return _Components.Exists(x => x.Name == name);
+            return Components.Exists(x => x.Name == name);
         }
 
         public bool RemoveComponent(string name) {            
-            return _Components.RemoveAll(x => x.Name == name) > 0;
+            return Components.RemoveAll(x => x.Name == name) > 0;
         }
 
         public override string ToString() {
