@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 
 namespace ECS {
     public class World : ECSObject {
@@ -8,6 +10,13 @@ namespace ECS {
         public World() {
             Entities = new List<Entity>();
             Systems = new List<System>();
+        }
+
+        
+        public void CreateEntity(string name, params Component[] components) {
+            Entity entity = new Entity(name);
+            entity.AddComponents(components);
+            AddEntity(entity);
         }
 
         // Entity Add/Remove //
@@ -54,20 +63,20 @@ namespace ECS {
         }
 
         // System Loop //
-        enum ForEachType { Load, Update, Draw }
+        enum ForEachType { Init, Update, Draw }
         private void ForEach(ForEachType type, float dt) {
             Systems.ForEach(s => {
                 Entities.ForEach(e => {
-                    if(s.Match(e)) {
+                    if(s.Match(e)) { // <- this set CurrentEntity
                         switch(type) {
-                            case ForEachType.Load:
-                                s.Load(e);
+                            case ForEachType.Init:
+                                s.Init();
                                 break;
                             case ForEachType.Update:
-                                s.Update(e, dt);
+                                s.Update(dt);
                                 break;
                             case ForEachType.Draw:
-                                s.Draw(e);
+                                s.Draw();
                                 break;
                         }
                     }
@@ -75,8 +84,8 @@ namespace ECS {
             });
         }
 
-        public void Load() {
-            ForEach(ForEachType.Load, 0);
+        public void Init() {
+            ForEach(ForEachType.Init, 0);
         }
 
         public void Update(float dt) {
