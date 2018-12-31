@@ -1,11 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 namespace ECS {
     static class Helper {
-        private static long UID = 0;
-
-        public static long CreateUID() {
-            return UID++;
+        public static string CreateUID() {
+            return Guid.NewGuid().ToString("N");
         }
 
         public static bool CheckExistUID<T, K>(List<T> list, T item, K owner) where T : ECSObject where K : ECSObject {

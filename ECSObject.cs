@@ -1,10 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace ECS {
+﻿namespace ECS {
     public abstract class ECSObject {
-        static protected List<Entity> _Entities;
-
-        public readonly long UID;
+        public readonly string UID;
         public string Name;
 
         public ECSObject() {
