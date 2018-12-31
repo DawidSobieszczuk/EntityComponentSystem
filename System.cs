@@ -1,27 +1,30 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-
-namespace ECS {
+﻿namespace ECS {
     public abstract class System : ECSObject {
-        protected readonly List<string> __RequireComponetNames;
+        private readonly string[] RequireComponentNames;
+        protected Entity CurrentEntity { get; private set; }
 
-        public System() {
-            __RequireComponetNames = new List<string>();
+        public System(params string[] requireComponentNames) {
+            RequireComponentNames = requireComponentNames;
+        }
+
+        protected T Get<T>() where T : Component {
+            return CurrentEntity.GetComponent<T>();
         }
 
         public bool Match(Entity entity) {
-            if(__RequireComponetNames.Count < 1)
+            if(RequireComponentNames.Length < 1)
                 return false;
-            foreach(string s in  __RequireComponetNames) {
+            foreach(string s in RequireComponentNames) {
                 if(!entity.HasComponent(s)) return false;
             }
 
+            CurrentEntity = entity;
             return true;
         }
 
-        public virtual void Load(Entity entity) { }
-        public virtual void Update(Entity entity, float dt) { }
-        public virtual void Draw(Entity entity) { }
+        public virtual void Init() { }
+        public virtual void Update(float dt) { }
+        public virtual void Draw() { }
 
         public override string ToString() {
             return string.Format("System<{0}:{1}>", Name, UID);
