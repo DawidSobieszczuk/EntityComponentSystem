@@ -1,5 +1,7 @@
 # EntityComponentSystem
 
+NuGet: https://www.nuget.org/packages/ECS
+
 ###### TextComponet.cs:
 ```c#
 class TextComponent : ECS.Component {
