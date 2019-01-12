@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.9.1</Version>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+    <Version>0.9.1.1</Version>
     <Description>Entity Component System</Description>
     <Authors>DawidSobieszczuk</Authors>
     <Product>EntityComponentSystem</Product>
@@ -10,7 +10,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/DawidSobieszczuk/EntityComponentSystem</PackageProjectUrl>
     <PackageReleaseNotes />
-    <NeutralLanguage>gsw</NeutralLanguage>
+    <NeutralLanguage>en</NeutralLanguage>
     <PackageTags>ECS Game Engine Entity Component System Simple Dawid Sobieszczuk</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
