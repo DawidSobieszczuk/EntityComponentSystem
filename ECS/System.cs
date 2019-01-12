@@ -1,4 +1,6 @@
-﻿namespace ECS {
+﻿using Newtonsoft.Json;
+
+namespace ECS {
     public abstract class System : ECSObject {
         private readonly string[] RequireComponentNames;
         protected Entity CurrentEntity { get; private set; }

@@ -1,14 +1,18 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace ECS {
     public class Entity : ECSObject {
+        [JsonProperty()]
         private readonly List<Component> Components = new List<Component>();
-        
+        [JsonProperty()]
         internal World World;
-
+        [JsonProperty()]
         public Entity Parent;
+
+        [JsonIgnore()]
         public Entity[] Children { get { if(World == null) return new Entity[0]; return World.Entities.FindAll(x => x.Parent == this).ToArray(); } }
 
         public Entity(){ }

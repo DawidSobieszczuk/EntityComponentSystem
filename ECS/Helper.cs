@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+
 namespace ECS {
     static class Helper {
         public static string CreateUID() {
